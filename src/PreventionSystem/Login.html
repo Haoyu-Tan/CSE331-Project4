@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<header style = "text-align: center; background-color: #666; color: white; padding: 30px;">
+    <h3 >Intrusion Prevention System</h3>
+</header>
+
+<div ng-app = "loginPage", ng-controller = "myCtrl">
+        <p  style = "color:red" ng-show = "accountEmpty">Account must not be empty</p>
+        <p  style = "color:red" ng-show = "passwordEmpty">Password must not be empty</p>
+        <h1>Log In</h1>
+        <p>Host Name/ IP:</p>
+        <input type = "text" ng-model = "account"  required>
+        <p>Password:</p>
+        <input type = "text" ng-model = "password" required><br>
+        <p></p>
+        <button ng-click = "logIn()">Log in</button>
+
+    </div>
+
+    <script>
+        var app = angular.module('loginPage', []);
+        app.controller('myCtrl', ['$scope', '$window', function($scope, $window){
+            $scope.accountEmpty = false;
+            $scope.passwordEmpty = false;
+            $scope.logIn = function(){
+                $scope.accountEmpty = false;
+                $scope.passwordEmpty = false;
+                console.log(0);
+                if(typeof $scope.account === 'undefined'){
+                    console.log(1);
+                    $scope.accountEmpty = true;
+                }
+                if(typeof $scope.password === 'undefined'){
+                    console.log(2);
+                    $scope.passwordEmpty = true;
+                }
+                else{
+
+                    $window.location.href = "/UI/PreventionSystem/manager.html";
+                }
+            }
+        }]);
+    </script>
+<footer style = "text-align: center; background-color: #666; color: white; padding: 10px;">
+    <p>CSE331 Project4 Team: qwerty:p</p>
+</footer>
+</body>
+</html>

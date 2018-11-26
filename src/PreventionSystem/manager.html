@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app = "manager">
+<header style = "text-align: center; background-color: #666; color: white; padding: 30px;">
+    <h3 >Intrusion Prevention System</h3>
+    <a href="/UI/PreventionSystem/Login.html" style = "float: right; bottom: 0">Log Out</a>
+
+</header>
+
+
+<section>
+    <div style = " background-color: black; color: white; padding: 10px;">
+    <p><a href="#/!"></a></p>
+    <a href="#!joomla" style = "color: white; margin-right: 30px;">Joomla</a>
+    <a href="#!wordpress" style = "color: white; margin-right: 30px;">Wordpress</a>
+    <a href="#!myadmin" style = "color : white; margin-right: 30px;">phpMyAdmin</a>
+    <a href="#!ssh" style = "color : white; margin-right: 30px;">SSH</a>
+    </div>
+    <ng-view style = "text-align: center;"></ng-view>
+
+
+</section>
+
+<footer style = "text-align: center; background-color: #666; color: white; padding: 10px;">
+    <p>CSE331 Project4 Team: qwerty:p</p>
+</footer>
+
+<script>
+var app = angular.module("manager", ["ngRoute"]);
+app.config(function($routeProvider){
+    $routeProvider
+    .when("/", {
+        template: "<h1>Welcome!</h1><p>Click on the links to change this content</p>"
+    })
+    .when("/joomla",{
+        templateUrl : "joomla.html",
+        controller: "jooControl"
+
+    })
+    .when("/wordpress", {
+        templateUrl : "wordpress.html"
+    })
+    .when("/myadmin", {
+        templateUrl : "myadmin.html"
+    })
+    .when("/ssh", {
+        templateUrl : "ssh.html"
+    })
+});
+
+
+    app.controller('jooControl', function($scope){
+        console.log("joo");
+        $scope.anyEmpty = false;
+        $scope.Submit = function(){
+            $scope.anyEmpty = false;
+            if((typeof $scope.request === 'undefined') || (typeof $scope.minutes === 'undefined') ||
+                (typeof $scope.times === 'undefined')){
+                $scope.anyEmpty = true;
+            }
+            else{
+
+            }
+        }
+
+
+    });
+
+
+</script>
+
+</body>
+</html>
