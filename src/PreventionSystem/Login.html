@@ -43,7 +43,28 @@
                 }
                 else{
 
-                    $window.location.href = "/UI/PreventionSystem/manager.html";
+                    console.log(window.location.pathname);
+                    var loc = window.location.pathname;
+                    console.log(loc);
+                    console.log(loc.lastIndexOf("\\"));
+                    var isWindow = loc.lastIndexOf("\\");
+
+                    if(isWindow != -1){
+                        var dir = loc.substring(0, loc.lastIndexOf('\\'));
+                        console.log(dir);
+
+                        var absolutePath = dir + "\manager.html";
+                        $window.location.href = absolutePath;
+
+                    }
+                    else{
+                        console.log(loc.lastIndexOf('/'));
+                        var dir = loc.substring(0, loc.lastIndexOf('/'));
+                        console.log(dir);
+                        var absolutePath = dir + "/manager.html";
+                        console.log(absolutePath);
+                        $window.location.href = absolutePath
+                    }
                 }
             }
         }]);

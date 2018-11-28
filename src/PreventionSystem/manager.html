@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body ng-app = "manager">
+<body ng-app = "manager" ng-controller = "mangController">
 <header style = "text-align: center; background-color: #666; color: white; padding: 30px;">
     <h3 >Intrusion Prevention System</h3>
-    <a href="/UI/PreventionSystem/Login.html" style = "float: right; bottom: 0">Log Out</a>
+    <a ng-model = "absolutePath" href= {{absolutePath}} style = "float: right; bottom: 0" >Log Out</a>
 
 </header>
 
@@ -33,6 +33,30 @@
 
 <script>
 var app = angular.module("manager", ["ngRoute"]);
+app.controller('mangController', function($scope){
+    console.log(window.location.pathname);
+    var loc = window.location.pathname;
+    console.log(loc);
+    console.log(loc.lastIndexOf("\\"));
+    var isWindow = loc.lastIndexOf("\\");
+
+    if(isWindow != -1){
+        var dir = loc.substring(0, loc.lastIndexOf('\\'));
+        console.log(dir);
+
+        $scope.absolutePath = dir + "\Login.html";
+
+    }
+    else{
+        console.log(loc.lastIndexOf('/'));
+        var dir = loc.substring(0, loc.lastIndexOf('/'));
+        console.log(dir);
+        $scope.absolutePath = dir + "/Login.html";
+
+
+    }
+
+});
 app.config(function($routeProvider){
     $routeProvider
     .when("/", {
