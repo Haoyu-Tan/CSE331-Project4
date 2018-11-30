@@ -13,26 +13,34 @@
 
 </header>
 
+<p style = "text-align: center">Welcome!</p>
+<div ng-controller = "jooControl" style = "border-style: solid; border-width: 5px; min-height: 500px; text-align: center" name = "userInput">
+    <input type = "text" name = "request" ng-model = "request" style = "margin-top: 10px; margin-left: 10px" ng-pattern="/^[0-9]+$/" required> requests
+    <input type = "text" name = "minutes" ng-model = "minutes" style = "margin-top: 10px; margin-left: 10px" ng-pattern="/^[0-9]+$/" required> minutes
+    <input type = "text" name = "times" ng-model = "times" style = "margin-top: 10px; margin-left: 10px" ng-pattern="/^[0-9]+$/" required> times
+    <button ng-click = "Submit()">Submit</button>
 
-<section>
-    <div style = " background-color: black; color: white; padding: 10px;">
-    <p><a href="#/!"></a></p>
-    <a href="#!joomla" style = "color: white; margin-right: 30px;">Joomla</a>
-    <a href="#!wordpress" style = "color: white; margin-right: 30px;">Wordpress</a>
-    <a href="#!myadmin" style = "color : white; margin-right: 30px;">phpMyAdmin</a>
-    <a href="#!ssh" style = "color : white; margin-right: 30px;">SSH</a>
+    <span style = "color:red" ng-show = "anyEmpty">Empty field and anything other than integer not allow</span>
+
+    <h4 style = "margin-top: 50px;">IP Blocking List</h4>
+    <div style = "border-style: solid; border-width: 3px; height: 350px; border-color: black; max-width: 400px; margin-left: auto; margin-right: auto; margin-top: 0px; overflow: auto;">
+        <ul>
+            <li ng-repeat = "x in ipList" >
+                {{x}}
+
+                <span  ng-click ="removeItem($index)" confirm = "Are you sure you want to remove this ip address from black list?" style = "float: right; padding-right: 20px">&times;</span>
+            </li>
+        </ul>
+
     </div>
-    <ng-view style = "text-align: center;"></ng-view>
-
-
-</section>
+</div>
 
 <footer style = "text-align: center; background-color: #666; color: white; padding: 10px;">
     <p>CSE331 Project4 Team: qwerty:p</p>
 </footer>
 
 <script>
-var app = angular.module("manager", ["ngRoute"]);
+var app = angular.module("manager", []);
 app.controller('mangController', function($scope){
     console.log(window.location.pathname);
     var loc = window.location.pathname;
@@ -57,44 +65,59 @@ app.controller('mangController', function($scope){
     }
 
 });
-app.config(function($routeProvider){
-    $routeProvider
-    .when("/", {
-        template: "<h1>Welcome!</h1><p>Click on the links to change this content</p>"
-    })
-    .when("/joomla",{
-        templateUrl : "joomla.html",
-        controller: "jooControl"
 
-    })
-    .when("/wordpress", {
-        templateUrl : "wordpress.html"
-    })
-    .when("/myadmin", {
-        templateUrl : "myadmin.html"
-    })
-    .when("/ssh", {
-        templateUrl : "ssh.html"
-    })
-});
-
-
-    app.controller('jooControl', function($scope){
+    app.controller('jooControl', ['$scope', '$window', '$http', function($scope, $window, $http){
         console.log("joo");
         $scope.anyEmpty = false;
+        $scope.ipList = ["Milk", "Bread", "Cheese", "Orange", "Coffee", "Dumplings", "Shumai", "Grape",
+         "Orange Chicken", "Salmon", "Pork Leg", "Beef", "Pasta", "Tomato", "Potato", "Tofu", "Sushi",
+         "Banana", "Cake", "Ice cream", "Soup", "Pear", "Corn", "Bean"];
+
         $scope.Submit = function(){
             $scope.anyEmpty = false;
+
+
             if((typeof $scope.request === 'undefined') || (typeof $scope.minutes === 'undefined') ||
                 (typeof $scope.times === 'undefined')){
                 $scope.anyEmpty = true;
             }
             else{
 
+                console.log($scope.request);
+                console.log($scope.minutes);
+                console.log($scope.times);
+
+                $http({
+                    method : 'POST',
+                    url : '/api/admindata',
+
+                    data : {
+                            request : $scope.request,
+                            minute : $scope.minutes,
+                            time : $scope.times
+
+                            }
+                });
+
+                $window.alert("Sending Successfully!");
             }
-        }
+
+        };
 
 
-    });
+
+        $scope.removeItem = function(x){
+
+                    $scope.ipList.splice(x,1);
+
+        };
+
+
+
+
+    }]);
+
+
 
 
 </script>
