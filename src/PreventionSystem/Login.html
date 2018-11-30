@@ -20,7 +20,7 @@
         <p>Password:</p>
         <input type = "text" ng-model = "password" required><br>
         <p></p>
-        <input type=submit value="Log in">
+        <button type=submit value="Log in" ng-click = "logIn()">Log In</button>
 
     </div>
 
@@ -42,6 +42,7 @@
                     $scope.passwordEmpty = true;
                 }
                 else{
+                    console.log(3)
                     $http({
                           method  : 'POST',
                           url     : '/login',
