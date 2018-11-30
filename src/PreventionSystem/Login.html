@@ -20,7 +20,7 @@
         <p>Password:</p>
         <input type = "text" ng-model = "password" required><br>
         <p></p>
-        <button ng-click = "logIn()">Log in</button>
+        <input type=submit value="Log in">
 
     </div>
 
@@ -42,6 +42,19 @@
                     $scope.passwordEmpty = true;
                 }
                 else{
+                    $http({
+                          method  : 'POST',
+                          url     : '/login',
+                          // set the headers so angular passing info as form data (not request payload)
+                          //headers : { 'Content-Type': 'application/json' },
+                          data    :  {
+                                      type:'login',
+                                      username:$scope.account,
+                                      password:$scope.password
+                                    }
+
+                         })
+
 
                     console.log(window.location.pathname);
                     var loc = window.location.pathname;
