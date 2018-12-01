@@ -1,0 +1,32 @@
+{
+    "admindata": {
+        "requestlimit": 5,
+        "requestwindow": 3,
+        "blockduration": 1
+    },
+    "clientdata": {
+        "clients": [
+            {
+                "ipaddress": "123.144.12.1",
+                "firstlogin": "2018-10-11 20:15:13",
+                "failedrequests": 3,
+                "timeblocked": null,
+                "removeblacklist": true
+            },
+            {
+                "ipaddress": "123.144.12.2",
+                "firstlogin": "2018-10-11 20:15:15",
+                "failedrequests": 1,
+                "timeblocked": "2018-10-12 20:12:11",
+                "removeblacklist": false
+            },
+            {
+                "ipaddress": "123.143.12.2",
+                "firstlogin": "2018-10-12 20:15:15",
+                "failedrequests": 1,
+                "timeblocked": "2018-10-12 10:12:11",
+                "removeblacklist": false
+            }
+        ]
+    }
+}

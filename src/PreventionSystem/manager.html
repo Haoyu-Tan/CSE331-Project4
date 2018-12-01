@@ -69,9 +69,21 @@ app.controller('mangController', function($scope){
     app.controller('jooControl', ['$scope', '$window', '$http', function($scope, $window, $http){
         console.log("joo");
         $scope.anyEmpty = false;
-        $scope.ipList = ["Milk", "Bread", "Cheese", "Orange", "Coffee", "Dumplings", "Shumai", "Grape",
-         "Orange Chicken", "Salmon", "Pork Leg", "Beef", "Pasta", "Tomato", "Potato", "Tofu", "Sushi",
-         "Banana", "Cake", "Ice cream", "Soup", "Pear", "Corn", "Bean"];
+
+        $scope.ipList = [];
+
+        var path='/usr/share/modips/data/clientdata.json'
+
+            $http.get(path).then(function (response) {
+                    var obj = response.data;
+                    var clientData = obj.clientdata;
+                    var clients = clientData.clients;
+                    for (i in clients){
+                        if (clients[i].timeblocked!= null){
+                            $scope.ipList.push(clients[i].ipaddress);
+                        }
+                    }
+                });
 
         $scope.Submit = function(){
             $scope.anyEmpty = false;
