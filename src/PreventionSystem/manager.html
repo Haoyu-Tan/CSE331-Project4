@@ -73,6 +73,7 @@ app.controller('mangController', function($scope){
         $scope.ipList = [];
 
         var path='/usr/share/modips/data/clientdata.json'
+        <!--var path= './clientdata.json'-->
 
             $http.get(path).then(function (response) {
                     var obj = response.data;
@@ -101,7 +102,7 @@ app.controller('mangController', function($scope){
 
                 $http({
                     method : 'POST',
-                    url : '/api/admindata',
+                    url : 'http://modips.com/api/admindata',
 
                     data : {
                             request : $scope.request,
@@ -119,7 +120,15 @@ app.controller('mangController', function($scope){
 
 
         $scope.removeItem = function(x){
+                    $http({
+                    method : 'POST',
+                    url : 'http://modips.com/api/clients/',
 
+                    data : {
+                            ip : $scope.ipList[x]
+                            }
+                });
+                    console.log($scope.ipList[x]);
                     $scope.ipList.splice(x,1);
 
         };
