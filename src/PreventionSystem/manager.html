@@ -28,7 +28,8 @@
             <li ng-repeat = "x in ipList" >
                 {{x}}
 
-                <span  ng-click ="removeItem($index)" confirm = "Are you sure you want to remove this ip address from black list?" style = "float: right; padding-right: 20px">&times;</span>
+                <span ng-confirm-click="Are you sure to delete this record ?" confirmed-click="removeItem($index)" style = "float: right; padding-right: 20px">&times;</span>
+                <!--<span ng-click = "removeItem($index)" style = "float: right; padding-right: 20px">&times;</span>-->
             </li>
         </ul>
 
@@ -100,6 +101,8 @@ app.controller('mangController', function($scope){
                 console.log($scope.minutes);
                 console.log($scope.times);
 
+
+
                 $http({
                     method : 'POST',
                     url : 'http://modips.com/api/admindata',
@@ -127,9 +130,16 @@ app.controller('mangController', function($scope){
                     data : {
                             ip : $scope.ipList[x]
                             }
-                });
+                    });
                     console.log($scope.ipList[x]);
-                    $scope.ipList.splice(x,1);
+                    console.log("reach here")
+
+
+                    $scope.$apply(function(){
+
+                         $scope.ipList.splice(x,1);
+                         console.log($scope.ipList);
+                    });
 
         };
 
@@ -139,7 +149,20 @@ app.controller('mangController', function($scope){
     }]);
 
 
-
+app.directive('ngConfirmClick', [
+    function(){
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Are you sure?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click',function (event) {
+                    if ( window.confirm(msg) ) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+}])
 
 </script>
 
