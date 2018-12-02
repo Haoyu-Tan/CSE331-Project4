@@ -72,7 +72,7 @@ app.controller('mangController', function($scope){
 
         $scope.ipList = [];
 
-        var path='/usr/share/modips/data/clientdata.json'
+        var path='http://modips.com/api/admindata'
         <!--var path= './clientdata.json'-->
 
             $http.get(path).then(function (response) {
@@ -112,7 +112,7 @@ app.controller('mangController', function($scope){
                             }
                 });
 
-                $window.alert("Sending Successfully!");
+
             }
 
         };

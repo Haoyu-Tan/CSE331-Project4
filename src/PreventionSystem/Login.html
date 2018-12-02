@@ -43,39 +43,48 @@
                 }
                 else{
                     console.log(3)
+                    console.log($scope.account)
+                    console.log($scope.password)
                     $http({
                           method  : 'POST',
-                          url     : '/login',
+                          url     : 'http://modips.com/api/login',
                           data    : {
                                       username:$scope.account,
-                                      password:$scope.password
+                                      pass:$scope.password
                                     }
+                          }).then(function successCallback(response) {
+                            console.log(response.data);
+                            if (response.data==="success"){
+                                console.log(window.location.pathname);
+                                var loc = window.location.pathname;
+                                console.log(loc);
+                                console.log(loc.lastIndexOf("\\"));
+                                var isWindow = loc.lastIndexOf("\\");
 
-                         })
+                                if(isWindow != -1){
+                                    var dir = loc.substring(0, loc.lastIndexOf('\\'));
+                                    console.log(dir);
+
+                                    var absolutePath = dir + "\manager.html";
+                                    $window.location.href = absolutePath;
+
+                             }else{
+                                    console.log(loc.lastIndexOf('/'));
+                                    var dir = loc.substring(0, loc.lastIndexOf('/'));
+                                    console.log(dir);
+                                    var absolutePath = dir + "/manager.html";
+                                    console.log(absolutePath);
+                                    $window.location.href = absolutePath;
+                                }
+                            }else {
+                                alert('login error');
+                            }
+                         }, function errorCallback (response){
+                            alert('webpage error');
+                         });
 
 
-                    console.log(window.location.pathname);
-                    var loc = window.location.pathname;
-                    console.log(loc);
-                    console.log(loc.lastIndexOf("\\"));
-                    var isWindow = loc.lastIndexOf("\\");
 
-                    if(isWindow != -1){
-                        var dir = loc.substring(0, loc.lastIndexOf('\\'));
-                        console.log(dir);
-
-                        var absolutePath = dir + "\manager.html";
-                        $window.location.href = absolutePath;
-
-                    }
-                    else{
-                        console.log(loc.lastIndexOf('/'));
-                        var dir = loc.substring(0, loc.lastIndexOf('/'));
-                        console.log(dir);
-                        var absolutePath = dir + "/manager.html";
-                        console.log(absolutePath);
-                        $window.location.href = absolutePath
-                    }
                 }
             }
         }]);
