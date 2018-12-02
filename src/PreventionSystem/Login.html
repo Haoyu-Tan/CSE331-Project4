@@ -76,8 +76,9 @@
                                     console.log(absolutePath);
                                     $window.location.href = absolutePath;
                                 }
+                                alert('Login successfully!')
                             }else {
-                                alert('login error');
+                                alert('Wrong user name or password! Please try again.');
                             }
                          }, function errorCallback (response){
                             alert('webpage error');
